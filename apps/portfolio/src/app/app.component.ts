@@ -7,4 +7,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'portfolio';
+  links = [
+    { path: '/home', icon: 'home', title: 'Home' },
+    { path: '/experiences', icon: 'view_list', title: 'Experiences' },
+  ];
+
+  constructor() {}
 }
