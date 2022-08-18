@@ -1,1 +1,91 @@
-<p>experiences works!</p>
+<div class="experiences-containers">
+  <div class="experiences-list">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title> Experience List </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-list>
+          <mat-list-item
+            *ngFor="let experience of experiences"
+            (click)="selectExperience(experience)"
+          >
+            <h3 matLine>{{ experience.title | titlecase }}</h3>
+            <p matLine>
+              {{ experience.description }}
+            </p>
+            <button
+              mat-icon-button
+              color="warn"
+              (click)="
+                deleteExperience(experience.id);
+                $event.stopImmediatePropagation()
+              "
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </mat-list-item>
+        </mat-list>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div class="experience-details">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <span *ngIf="selectedExperience?.id; else elseBlock">
+            {{ originalTitle | titlecase }}
+          </span>
+          <ng-template #elseBlock>Select a Experience</ng-template>
+        </mat-card-title>
+      </mat-card-header>
+      <form #form="ngForm" (submit)="saveExperience(selectedExperience)">
+        <mat-card-content>
+          <mat-form-field class="full-width">
+            <input
+              matInput
+              placeholder="Title"
+              [(ngModel)]="selectedExperience.title"
+              name="title"
+              required
+              type="text"
+            />
+          </mat-form-field>
+          <mat-form-field class="full-width">
+            <textarea
+              matInput
+              placeholder="Description"
+              [(ngModel)]="selectedExperience.description"
+              name="description"
+              type="text"
+            ></textarea>
+          </mat-form-field>
+
+          <section>
+            <mat-checkbox
+              [(ngModel)]="selectedExperience.current"
+              name="current"
+            >
+              Current Postion?
+            </mat-checkbox>
+          </section>
+        </mat-card-content>
+        <mat-card-actions>
+          <button
+            type="submit"
+            [disabled]="form.invalid"
+            mat-button
+            color="primary"
+          >
+            Save
+          </button>
+          <button type="button" mat-button (click)="reset()">Cancel</button>
+        </mat-card-actions>
+      </form>
+      <hr />
+      <pre>{{ form.value | json }}</pre>
+      <pre>{{ form.valid | json }}</pre>
+    </mat-card>
+  </div>
+</div>
