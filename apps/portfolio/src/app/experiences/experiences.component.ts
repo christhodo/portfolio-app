@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Experience } from '../common/models/experience';
+import { ExperiencesService } from '../common/services/experiences.service';
 
 const emptyExperience: Experience = {
   id: null,
@@ -14,27 +15,15 @@ const emptyExperience: Experience = {
   styleUrls: ['./experiences.component.scss'],
 })
 export class ExperiencesComponent implements OnInit {
-  experiences = [
-    {
-      id: '1',
-      title: 'Store Manager Trainer',
-      description: 'Trained Starbucks Store Managers to be awesome! ',
-      current: false,
-    },
-    {
-      id: '2',
-      title: 'District Sales Manager',
-      description: 'Managed multiple retail locations across the US ',
-      current: false,
-    },
-  ];
-
+  experiences = [];
   selectedExperience = emptyExperience;
   originalTitle = '';
 
-  constructor() {}
+  constructor(private experiencesService: ExperiencesService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.experiences = this.experiencesService.experiences;
+  }
 
   selectExperience(experience) {
     this.selectedExperience = { ...experience };
